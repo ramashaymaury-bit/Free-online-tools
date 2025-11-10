@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Free Tools Hub — Free Tools Directory</title>
+  <meta name="description" content="Free Tools Hub — एक interactive सूची: AI, Writing, Design, SEO और Productivity के free tools।" />
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#94a3b8;--accent:#06b6d4;--glass:rgba(255,255,255,0.03)}
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:linear-gradient(180deg,#071426 0%, #07121a 100%);color:#e6eef8;-webkit-font-smoothing:antialiased;}
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid rgba(255,255,255,0.04);backdrop-filter:blur(6px)}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,#06b6d4,#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:700;color:#041025}
+    h1{font-size:18px;margin:0}
+    p.lead{margin:0;font-size:13px;color:var(--muted)}
+    .controls{display:flex;gap:12px;align-items:center}
+    .search{padding:10px 14px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.04);min-width:260px;color:inherit}
+    select,button,input[type=text]{background:transparent;color:inherit;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:10px}
+    main{padding:22px;max-width:1100px;margin:18px auto}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 6px 18px rgba(2,6,23,0.6);transition:transform .18s ease, box-shadow .18s ease}
+    .card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(2,6,23,0.7)}
+    .card .top{display:flex;align-items:center;gap:12px}
+    .thumb{width:48px;height:48px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:20px;overflow:hidden}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .meta{flex:1}
+    .meta h3{margin:0;font-size:15px}
+    .meta p{margin:6px 0 0;font-size:13px;color:var(--muted);min-height:40px}
+    .tags{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+    .tag{font-size:12px;padding:6px 8px;border-radius:999px;border:1px solid rgba(255,255,255,0.03)}
+    .actions{display:flex;gap:8px;margin-top:12px}
+    .btn{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg,#06b6d4,#7c3aed);color:#041025;border:none}
+    .small{font-size:13px}
+    footer{max-width:1100px;margin:18px auto;padding:10px 22px;color:var(--muted);text-align:center}
+    .toolbar{display:flex;gap:8px;align-items:center}
+    .badge{background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+    /* ad banner style */
+    .ad-banner{display:flex;align-items:center;justify-content:center;flex-direction:column;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px dashed rgba(255,255,255,0.06);min-height:120px}
+    .ad-banner img{max-width:100%;height:auto;border-radius:8px;display:block}
+    .ad-label{font-size:12px;color:var(--muted);margin-top:8px}
+    /* modal */
+    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);backdrop-filter:blur(4px);visibility:hidden;opacity:0;transition:all .18s}
+    .modal.show{visibility:visible;opacity:1}
+    .modal .panel{background:linear-gradient(180deg,#051227,#081426);padding:18px;border-radius:12px;width:520px;max-width:95%;border:1px solid rgba(255,255,255,0.04)}
+    label{display:block;font-size:13px;margin-top:10px;color:var(--muted)}
+    input[type=text], textarea{width:100%;padding:10px;margin-top:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    textarea{min-height:90px}
+    .row{display:flex;gap:8px}
+    @media (max-width:560px){.brand p.lead{display:none}.controls{flex-direction:column;align-items:flex-end}.search{min-width:unset;width:100%}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">FT</div>
+      <div>
+        <h1>Free Tools Hub</h1>
+        <p class="lead">AI · Writing · Design · SEO · Productivity — सब मुफ्त लिंक के साथ ✨</p>
+      </div>
+    </div>
+
+    <div class="controls">
+      <input id="search" class="search" placeholder="Search tools... (उदा. AI, SEO, design)" />
+      <select id="filterCategory">
+        <option value="all">All categories</option>
+      </select>
+      <select id="sortBy">
+        <option value="featured">Sort: Featured</option>
+        <option value="rating">Sort: Rating</option>
+        <option value="name">Sort: Name</option>
+      </select>
+      <button id="addBtn" class="btn">➕ Add Tool</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="toolbar" style="justify-content:space-between;margin-bottom:12px">
+      <div class="badge">🔎 <span id="countText">0 tools</span></div>
+      <div class="badge">⭐ Favorites: <span id="favCount">0</span></div>
+    </div>
+
+    <div id="grid" class="grid"></div>
+  </main>
+
+  <footer>
+    Made with ❤️ by Siddharth — यह दिये गए tools सिर्फ refer करने के लिए हैं।
+  </footer>
+
+  <!-- modal add tool -->
+  <div id="modal" class="modal">
+    <div class="panel">
+      <h3>Add a Free Tool</h3>
+      <label>Tool name</label>
+      <input id="t_name" type="text" placeholder="e.g. ChatGPT" />
+      <label>URL (https://)</label>
+      <input id="t_url" type="text" placeholder="https://" />
+      <div class="row">
+        <div style="flex:1">
+          <label>Category</label>
+          <input id="t_cat" type="text" placeholder="AI, Writing, SEO, Design, Productivity" />
+        </div>
+        <div style="width:140px">
+          <label>Rating (0-5)</label>
+          <input id="t_rating" type="text" placeholder="4.5" />
+        </div>
+      </div>
+      <label>Logo URL (optional)</label>
+      <input id="t_logo" type="text" placeholder="https://example.com/logo.png" />
+      <label>Description</label>
+      <textarea id="t_desc" placeholder="Short description, features, emoji…"></textarea>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+        <button id="cancelAdd" class="btn">Cancel</button>
+        <button id="saveAdd" class="btn primary">Save Tool</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // default logo and banner paths (local assets)
+    const defaultLogo = 'assets/default-logo.svg';
+    const sampleBanner = 'assets/sample-banner.svg';
+
+    // Sample tools dataset (with logo optional)
+    const DEFAULT_TOOLS = [
+      {name:'ChatGPT', url:'https://chat.openai.com', category:'AI', rating:4.9, desc:'AI chatbot — सवाल-जवाब, content लिखना और code मदद।', logo:''},
+      {name:'Canva', url:'https://www.canva.com', category:'Design', rating:4.6, desc:'ऑनलाइन graphic design tool — templates, thumbnails, social posts.', logo:''},
+      {name:'Grammarly', url:'https://www.grammarly.com', category:'Writing', rating:4.4, desc:'Grammar & spelling checker, writing improvement.', logo:''},
+      {name:'Google Pagespeed', url:'https://pagespeed.web.dev', category:'SEO', rating:4.2, desc:'Website performance audit और improvement suggestions.', logo:''},
+      {name:'Figma', url:'https://www.figma.com', category:'Design', rating:4.7, desc:'UI/UX design और prototyping tool — free tier available.', logo:''},
+      {name:'Hemingway Editor', url:'https://hemingwayapp.com', category:'Writing', rating:4.0, desc:'Clear writing checker — readability improve.', logo:''},
+      {name:'Ubersuggest', url:'https://neilpatel.com/ubersuggest/', category:'SEO', rating:4.1, desc:'Keyword research और SEO insights (free limits).', logo:''},
+      {name:'Remove.bg', url:'https://www.remove.bg', category:'Design', rating:4.3, desc:'Background remove करने का auto tool — quick edits.', logo:''},
+      {name:'TinyPNG', url:'https://tinypng.com', category:'Performance', rating:4.5, desc:'Image compression to reduce page size.', logo:''},
+      {name:'Notion', url:'https://www.notion.so', category:'Productivity', rating:4.6, desc:'Notes, wiki और lightweight DBs — free plan.', logo:''},
+      {name:'AnswerThePublic', url:'https://answerthepublic.com', category:'SEO', rating:4.0, desc:'Content ideas और user search intent discovery.', logo:''},
+      {name:'Loom', url:'https://www.loom.com', category:'Productivity', rating:4.2, desc:'Screen recording और quick video messages.', logo:''}
+    ];
+
+    // State
+    let tools = [];
+    const favorites = new Set(JSON.parse(localStorage.getItem('ft_favs')||'[]'));
+
+    // Elements
+    const grid = document.getElementById('grid');
+    const search = document.getElementById('search');
+    const filterCategory = document.getElementById('filterCategory');
+    const sortBy = document.getElementById('sortBy');
+    const countText = document.getElementById('countText');
+    const favCount = document.getElementById('favCount');
+    const modal = document.getElementById('modal');
+    const addBtn = document.getElementById('addBtn');
+    const cancelAdd = document.getElementById('cancelAdd');
+    const saveAdd = document.getElementById('saveAdd');
+
+    // init
+    function init(){
+      tools = JSON.parse(localStorage.getItem('ft_tools')||'null') || DEFAULT_TOOLS;
+      // try to set logos from favicons if empty
+      tools = tools.map(t=>({...t, logo: t.logo || faviconFromUrl(t.url)}));
+      populateCategories();
+      render();
+    }
+
+    function populateCategories(){
+      const cats = new Set(tools.map(t=>t.category||'Other'));
+      filterCategory.innerHTML = '<option value="all">All categories</option>' + Array.from(cats).map(c=>`<option value="${c}">${c}</option>`).join('');
+    }
+
+    function render(){
+      const q = search.value.trim().toLowerCase();
+      const cat = filterCategory.value;
+      const sort = sortBy.value;
+      let visible = tools.filter(t=>{
+        const matchesQ = !q || (t.name+t.desc+t.category).toLowerCase().includes(q);
+        const matchesCat = cat==='all' || t.category===cat;
+        return matchesQ && matchesCat;
+      });
+
+      if(sort==='rating') visible.sort((a,b)=>b.rating - a.rating);
+      else if(sort==='name') visible.sort((a,b)=>a.name.localeCompare(b.name));
+      else if(sort==='featured') visible.sort((a,b)=> (favorites.has(b.url)?1:0) - (favorites.has(a.url)?1:0));
+
+      countText.textContent = `${visible.length} tools`;
+      favCount.textContent = favorites.size;
+
+      // build HTML with ad banner every 3 cards
+      const parts = [];
+      visible.forEach((t, idx)=>{
+        parts.push(toolCard(t));
+        if((idx+1) % 3 === 0){
+          parts.push(adBannerCard());
+        }
+      });
+      grid.innerHTML = parts.join('');
+      attachCardHandlers();
+      localStorage.setItem('ft_tools', JSON.stringify(tools));
+    }
+
+    function toolCard(t){
+      const fav = favorites.has(t.url);
+      const logo = t.logo || defaultLogo;
+      return `
+      <div class="card" data-url="${escapeHtml(t.url)}">
+        <div class="top">
+          <div class="thumb"><img src="${escapeHtml(logo)}" alt="${escapeHtml(t.name)} logo" onerror="this.src='${defaultLogo}'" /></div>
+          <div class="meta">
+            <h3>${escapeHtml(t.name)} <small style="color:var(--muted);font-weight:600;font-size:12px"> — ${escapeHtml(t.category)}</small></h3>
+            <p>${escapeHtml(t.desc)}</p>
+            <div class="tags">
+              <div class="tag">⭐ ${t.rating}</div>
+              <div class="tag">🔗 <a href="${escapeHtml(t.url)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Open</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn small" data-action="copy">📋 Copy URL</button>
+          <button class="btn small" data-action="visit">🔗 Visit</button>
+          <button class="btn small" data-action="fav">${fav? '💖 Unfav' : '🤍 Fav'}</button>
+        </div>
+      </div>
+      `;
+    }
+
+    function adBannerCard(){
+      return `
+      <div class="ad-banner">
+        <img src="${sampleBanner}" alt="Ad sample" />
+        <div class="ad-label">Advertisement Space — Replace with your AdSense / custom banner</div>
+      </div>
+      `;
+    }
+
+    function attachCardHandlers(){
+      document.querySelectorAll('.card').forEach(card=>{
+        const url = card.dataset.url;
+        card.querySelector('[data-action=copy]').addEventListener('click', ()=>{navigator.clipboard.writeText(url); alert('URL copied to clipboard!');});
+        card.querySelector('[data-action=visit]').addEventListener('click', ()=>window.open(url,'_blank'));
+        card.querySelector('[data-action=fav]').addEventListener('click', (e)=>{toggleFav(url); render();});
+      });
+    }
+
+    function toggleFav(url){
+      if(favorites.has(url)) favorites.delete(url); else favorites.add(url);
+      localStorage.setItem('ft_favs', JSON.stringify(Array.from(favorites)));
+    }
+
+    // Helpers
+    function escapeHtml(s){ return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+    function faviconFromUrl(u){
+      try{
+        const origin = new URL(u).origin;
+        return origin + '/favicon.ico';
+      }catch(e){ return defaultLogo; }
+    }
+
+    // Events
+    search.addEventListener('input', ()=>render());
+    filterCategory.addEventListener('change', ()=>render());
+    sortBy.addEventListener('change', ()=>render());
+    addBtn.addEventListener('click', ()=>{modal.classList.add('show')});
+    cancelAdd.addEventListener('click', ()=>{modal.classList.remove('show')});
+    saveAdd.addEventListener('click', ()=>{
+      const name = document.getElementById('t_name').value.trim();
+      const url = document.getElementById('t_url').value.trim();
+      const cat = document.getElementById('t_cat').value.trim() || 'Other';
+      const rating = parseFloat(document.getElementById('t_rating').value) || 0;
+      const logo = document.getElementById('t_logo').value.trim();
+      const desc = document.getElementById('t_desc').value.trim() || '';
+      if(!name || !url || !/^https?:\\/\\//.test(url)){ alert('Please fill name and valid URL (https://...)'); return; }
+      const logoFinal = logo || faviconFromUrl(url);
+      tools.unshift({name, url, category:cat, rating, desc, logo: logoFinal});
+      populateCategories();
+      modal.classList.remove('show');
+      document.getElementById('t_name').value='';document.getElementById('t_url').value='';document.getElementById('t_cat').value='';document.getElementById('t_rating').value='';document.getElementById('t_logo').value='';document.getElementById('t_desc').value='';
+      render();
+    });
+
+    // initial load
+    init();
+
+    // small UX: close modal on background click
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.classList.remove('show'); });
+
+  </script>
+</body>
+</html>
